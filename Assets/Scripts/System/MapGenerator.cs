@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
 {
     [SerializeField, Tooltip("生成するプレハブ")] List<GameObject> Fields = new();
     [SerializeField, Tooltip("フィールドを生成するポジション")]List<Vector3> GeneratePos = new();
     [SerializeField, Tooltip("一度に生成する数")] int _maxCount = 0;
     [SerializeField, Tooltip("配置の間隔")] float _offset = 0f;
+    public float Offset{ get => _offset;}
     [SerializeField] PlayerJump _player = default;
+
+    protected override bool _dontDestroyOnLoad { get { return true; } }
     void Start()
     {
         for(int i = 0; i < _maxCount; i++)
