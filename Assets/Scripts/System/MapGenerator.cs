@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] List<GameObject> Fields = new();
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
