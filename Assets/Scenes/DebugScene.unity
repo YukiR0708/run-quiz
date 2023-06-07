@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &201357765 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 156642, guid: 11905513070e2f34e8cd7350fb0d8ce7, type: 3}
-  m_PrefabInstance: {fileID: 239129681}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &239129681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -190,19 +185,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 453344, guid: 11905513070e2f34e8cd7350fb0d8ce7, type: 3}
   m_PrefabInstance: {fileID: 239129681}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &239129685
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201357765}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.24307224, y: 0.078013636, z: 0.95912075}
-  m_Center: {x: -0.00072714314, y: -0.008862692, z: 0.0046743006}
 --- !u!1 &439748183
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,9 +382,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.2677474
-  m_Height: 1.832905
+  m_Height: 1.9904277
   m_Direction: 1
-  m_Center: {x: 0, y: 0.96126616, z: 0.018567562}
+  m_Center: {x: 0, y: 0.8825048, z: 0.018567562}
 --- !u!54 &886817840
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class FieldMove : MonoBehaviour
         if(GameManager.Instance.NowMode ==  GameManager.GameMode.InGame
             && PlayerValues.Instance.NowCondition == PlayerValues.PlayerCondition.Run)
         {
-            transform.position -= new Vector3(0f, 0f, _speed);
+            transform.position -= new Vector3(0f, 0f, _speed * Time.deltaTime);
         }
     }
 }
