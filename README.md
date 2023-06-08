@@ -5,3 +5,9 @@
 * ジャンプ：スペース
 * アクセル：W・↑
 * ブレーキ：S・↓
+
+## 使用したアセット
+* 3Dモデル：[Mixamo](https://www.mixamo.com/)  
+* フォント：  
+* サウンド：  
+* アニメーション：[BasicMotionsFree](https://assetstore.unity.com/account/assets)
