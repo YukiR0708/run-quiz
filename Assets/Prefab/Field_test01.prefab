@@ -4667,7 +4667,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 5247
+  m_VersionIndex: 5277
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4766,7 +4766,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: -6298528264445587463, guid: 5c41723dc18c1e4458c5bd64a68b5813, type: 3}
 --- !u!114 &769477855921298568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4804,4 +4804,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55fbac1524df1aa4985ebf209b353d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 30
+  _speed: 3
