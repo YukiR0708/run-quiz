@@ -5,23 +5,25 @@ using UnityEngine;
 /// <summary> Playerが通過したら検知するクラス  </summary>
 public class PassedCheck : MonoBehaviour
 {
-    GameObject _player = default;
+    MapGenerator _mapGene = default;
     [Tooltip("Playerの座標")] Vector3 _pPos = default;
     private void Start()
     {
-        _player = PlayerJump.Instance.gameObject;
+        _mapGene = MapGenerator.Instance;
+        _pPos = PlayerValues.Instance.gameObject.transform.position;
     }
 
     private void Update()
     {
-        if(_player)
+
+        if (GameManager.Instance.NowMode == GameManager.GameMode.InGame
+                && PlayerValues.Instance.NowCondition == PlayerValues.PlayerCondition.Run)
         {
-            _pPos = _player.transform.position;
-            var border = new Vector3(0, 0, transform.position.z + MapGenerator.Instance.Offset);
-            if(_pPos .z > border.z)
+            if (transform.position.z <= _mapGene.BorderPos.z)
             {
                 MapGenerator.Instance.DestroyAndSpawn(this.gameObject);
             }
         }
+
     }
 }

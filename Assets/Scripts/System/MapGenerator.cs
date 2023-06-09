@@ -5,38 +5,41 @@ using UnityEngine;
 public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
 {
     [SerializeField, Tooltip("生成するプレハブ")] List<GameObject> Fields = new();
-    [SerializeField, Tooltip("フィールドを生成するポジション")]List<Vector3> GeneratePos = new();
-    [SerializeField, Tooltip("一度に生成する数")] int _maxCount = 0;
-    [SerializeField, Tooltip("配置の間隔")] float _offset = 0f;
-    public float Offset{ get => _offset;}
-    [SerializeField] PlayerJump _player = default;
+    [SerializeField, Tooltip("一度に生成する数")] int _maxCount = 10;
+    [SerializeField, Tooltip("配置の間隔")] float _space = 30f;
+    [Tooltip("新規生成する座標")] Vector3 _spawnPos = default;
+    [SerializeField, Tooltip("通過したフィールドを削除する基準の座標")] Vector3 _borderPos = default;
+    public Vector3 BorderPos { get => _borderPos; }
+    public float Space { get => _space; }
 
     protected override bool _dontDestroyOnLoad { get { return true; } }
     void Start()
     {
-        for(int i = 0; i < _maxCount; i++)
+        if (0 < _maxCount)
         {
-            //初期に展開する地形の座標を生成
-            GeneratePos.Add(new Vector3(0, 0, i * _offset));
-        }
-        //地形を生成
-        foreach(var pos in GeneratePos)
-        {
-            var field = Fields[Random.Range(0, Fields.Count - 1)];
-            Instantiate(field, pos, Quaternion.identity);
+            List<Vector3> GeneratePos = new();
+            for (int i = 0; i < _maxCount; i++)
+            {
+                //初期に展開する地形の座標を生成
+                GeneratePos.Add(new Vector3(0, 0, i * _space));
+            }
+            //地形を生成
+            foreach (var pos in GeneratePos)
+            {
+                var field = Fields[Random.Range(0, Fields.Count)];
+                Instantiate(field, pos, Quaternion.Euler(0f, 90f, 90f));
+            }
+            _spawnPos = GeneratePos[GeneratePos.Count - 1];
         }
     }
 
-/// <summary> Field側からPlayerの通過を検知したら呼ばれるメソッド</summary>
-/// <param name="field"></param>
-   public  void DestroyAndSpawn(GameObject field)
+    /// <summary> Field側からPlayerの通過を検知したら呼ばれるメソッド</summary>
+    /// <param name="field"></param>
+    public void DestroyAndSpawn(GameObject field)
     {
-        GeneratePos.RemoveAt(0);
+        var newField = Fields[Random.Range(0, Fields.Count)];
+        Instantiate(newField, _spawnPos, field.transform.rotation);
         Destroy(field);
-        var nextPos = new Vector3(0, 0, GeneratePos[GeneratePos.Count - 1].z + _offset);
-        GeneratePos.Add(nextPos);
-        var newField = Fields[Random.Range(0, Fields.Count - 1)];
-        Instantiate(newField, GeneratePos[GeneratePos.Count - 1], Quaternion.identity);
     }
 
 }

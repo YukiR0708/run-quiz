@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerJump : SingletonMonoBehaviour<PlayerJump>
 {
     Rigidbody _rb = default;
-    [SerializeField]float _jumpForce = default;
-    public float JumpForce { get => _jumpForce; set => _jumpForce = value; }
-    bool _canJump = default;
+    [SerializeField]bool _canJump = default;
 
     protected override bool _dontDestroyOnLoad { get { return true; } }
 
@@ -19,18 +15,26 @@ public class PlayerJump : SingletonMonoBehaviour<PlayerJump>
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && _canJump)
+        if (GameManager.Instance.NowMode == GameManager.GameMode.InGame
+                && PlayerValues.Instance.NowCondition == PlayerValues.PlayerCondition.Run)
         {
-            _canJump = false;
-            _rb.AddForce(Vector3.up * _jumpForce);
+            if (Input.GetKeyDown(KeyCode.Space) && _canJump)
+            {
+                _canJump = false;
+                _rb.AddForce(Vector3.up * PlayerValues.Instance.JumpForce);
+            }
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.TryGetComponent<FieldRotate>(out var field))
+        if (GameManager.Instance.NowMode == GameManager.GameMode.InGame
+                && PlayerValues.Instance.NowCondition == PlayerValues.PlayerCondition.Run)
         {
-            _canJump = true;
+            if (collision.gameObject.TryGetComponent<FieldMove>(out var field))
+            {
+                _canJump = true;
+            }
         }
     }
 }
