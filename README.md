@@ -11,5 +11,5 @@
 * フォント：  
 * サウンド：  
 * アニメーション：[BasicMotionsFree](https://assetstore.unity.com/account/assets)
-* SkyBox：[Free HDR Sky](https://assetstore.unity.com/packages/2d/textures-materials/sky/free-hdr-sky-61217)
+* SkyBox：[SkyboxSeriesFree]([https://assetstore.unity.com/packages/2d/textures-materials/sky/free-hdr-sky-61217](https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633))
 * 問題生成：[ChatGPT](https://openai.com/blog/chatgpt)
