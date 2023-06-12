@@ -6,12 +6,20 @@ using UnityEngine;
 public class FieldRotate : MonoBehaviour
 {
     [SerializeField] float _rotateSpeed = 0f;
+    GameManager _gm = default;
+    PlayerValues _pv = default;
     public float RotateSpeed { get => _rotateSpeed; set => _rotateSpeed = value; }
 
+
+    private void Start()
+    {
+        _gm = GameManager.Instance;
+        _pv = PlayerValues.Instance;
+    }
     private void Update()
     {
-        if (GameManager.Instance.NowMode == GameManager.GameMode.InGame
-    && PlayerValues.Instance.NowCondition == PlayerValues.PlayerCondition.Run)
+        if (_gm.NowMode == GameManager.GameMode.InGame
+    && _pv.NowCondition.HasFlag(PlayerValues.PlayerCondition.Run))
         {
             var hInput = Input.GetAxisRaw("Horizontal");
             if (hInput < 0f)

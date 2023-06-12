@@ -15,7 +15,12 @@ public class QuestionGenerator : SingletonMonoBehaviour<QuestionGenerator>
         Generate("テスト", 3);
     }
 
-   public void Generate(string genre, int level)
+    private void Update()
+    {
+      //UniRXでPlayerValuesを監視→Responseになった瞬間に出題する
+    }
+
+    public void Generate(string genre, int level)
     {
         string question = "問題文：test test test test test test test test test test test test";
         string temp = "";

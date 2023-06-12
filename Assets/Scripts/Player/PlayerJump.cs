@@ -4,19 +4,23 @@ public class PlayerJump : SingletonMonoBehaviour<PlayerJump>
 {
     Rigidbody _rb = default;
     [SerializeField]bool _canJump = default;
-
+    GameManager _gm = default;
+    PlayerValues _pv = default;
     protected override bool _dontDestroyOnLoad { get { return true; } }
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _canJump = true;
+        _gm = GameManager.Instance;
+        _pv = PlayerValues.Instance;
+
     }
 
     void Update()
     {
-        if (GameManager.Instance.NowMode == GameManager.GameMode.InGame
-                && PlayerValues.Instance.NowCondition == PlayerValues.PlayerCondition.Run)
+        if (_gm.NowMode == GameManager.GameMode.InGame
+                && _pv.NowCondition.HasFlag(PlayerValues.PlayerCondition.Run))
         {
             if (Input.GetKeyDown(KeyCode.Space) && _canJump)
             {
@@ -28,8 +32,8 @@ public class PlayerJump : SingletonMonoBehaviour<PlayerJump>
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (GameManager.Instance.NowMode == GameManager.GameMode.InGame
-                && PlayerValues.Instance.NowCondition == PlayerValues.PlayerCondition.Run)
+        if (_gm.NowMode == GameManager.GameMode.InGame
+                && _pv.NowCondition.HasFlag(PlayerValues.PlayerCondition.Run))
         {
             if (collision.gameObject.TryGetComponent<FieldMove>(out var field))
             {
