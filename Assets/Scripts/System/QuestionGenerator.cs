@@ -4,14 +4,17 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(ChatGPTClient))]
 public class QuestionGenerator : SingletonMonoBehaviour<QuestionGenerator>
 {
     protected override bool _dontDestroyOnLoad { get { return true; } }
     [SerializeField] Text _question = default;
     [SerializeField] Text _level = default;
     [SerializeField] float _textTime = 2.0f;
+    ChatGPTClient _chatGPTClient = default;
     void Start()
     {
+        _chatGPTClient = GetComponent<ChatGPTClient>();
         Generate("テスト", 3);
     }
 
@@ -22,8 +25,10 @@ public class QuestionGenerator : SingletonMonoBehaviour<QuestionGenerator>
 
     public void Generate(string genre, int level)
     {
-        string question = "問題文：test test test test test test test test test test test test";
-        string temp = "";
+        string question = "問題文：";
+        StartCoroutine(_chatGPTClient.SendRequest(level, genre, (s) => question += s));
+
+string temp = "";
         for (int i = 0; i < level; i++)
         {
             temp += "★";
