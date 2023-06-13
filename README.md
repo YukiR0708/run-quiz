@@ -12,4 +12,5 @@
 * サウンド：  
 * アニメーション：[BasicMotionsFree](https://assetstore.unity.com/account/assets)
 * SkyBox：[SkyboxSeriesFree](https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633)
-* 問題生成：[ChatGPT](https://openai.com/blog/chatgpt)
+* クイズ生成：[ChatGPT](https://openai.com/blog/chatgpt)  
+* JSON解析：[MiniJSON](https://gist.github.com/darktable/1411710)  
