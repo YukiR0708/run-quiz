@@ -20,7 +20,7 @@ public class MeshChecker : MonoBehaviour
     
     void FixedUpdate()
     {
-        Ray ray = new Ray(_foot.position, Vector3.down);
+        Ray ray = new Ray(_foot.position + new Vector3(0, 0, 10f), Vector3.down);
         //Playerの下方向にフィールドがあり、かつPlayerが回答中だったら
         if (Physics.Raycast(ray, out RaycastHit hit, 100.0f))
         {
