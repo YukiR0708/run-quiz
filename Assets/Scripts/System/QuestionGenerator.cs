@@ -10,36 +10,39 @@ public class QuestionGenerator : SingletonMonoBehaviour<QuestionGenerator>
     protected override bool _dontDestroyOnLoad { get { return true; } }
     [SerializeField] Text _question = default;
     [SerializeField] Text _level = default;
+    [SerializeField] Text _hint = default;
     [SerializeField] float _textTime = 2.0f;
     ChatGPTClient _chatGPTClient = default;
     void Start()
     {
         _chatGPTClient = GetComponent<ChatGPTClient>();
-        Generate("テスト", 3);
+        Generate("スポーツ", 3);
     }
 
     private void Update()
     {
-      //UniRXでPlayerValuesを監視→Responseになった瞬間に出題する
+        //UniRXでPlayerValuesを監視→Responseになった瞬間に出題する
     }
 
     public void Generate(string genre, int level)
     {
         string question = "問題文：";
-        StartCoroutine(_chatGPTClient.SendRequest(level, genre, (s) => question += s));
+        string hint = "ヒント：";
+        string answer = "解答：";
+        StartCoroutine(_chatGPTClient.SendRequest(level, genre, (q, h, a) => { question += q; hint += h; answer += a; }));
 
-string temp = "";
+        string temp = "";
         for (int i = 0; i < level; i++)
         {
             temp += "★";
         }
-        for(int i = 0; i < 5-level; i++)    //5は難易度の最大値
+        for (int i = 0; i < 5 - level; i++)    //5は難易度の最大値
         {
             temp += "☆";
         }
 
         _level.text = $"難易度：{temp}";
-        //ChatGPTからの出力をansに入れる
-        _question.DOText(question, _textTime);
+         _question.DOText(question, _textTime);
+        _hint.DOText(hint, _textTime);
     }
 }
