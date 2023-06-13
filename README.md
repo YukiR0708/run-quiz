@@ -14,3 +14,4 @@
 * SkyBox：[SkyboxSeriesFree](https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633)
 * クイズ生成：[ChatGPT](https://openai.com/blog/chatgpt)  
 * JSON解析：[MiniJSON](https://gist.github.com/darktable/1411710)  
+* APIキーの隠蔽：[DotNetEvn](https://github.com/tonerdo/dotnet-env)  
