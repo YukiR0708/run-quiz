@@ -5,27 +5,30 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 
+
 public class ChatGPTClient : MonoBehaviour
 {
-    private readonly string apiKey = "";　//コンストラクタでAPIキーを設定する
-    private const string apiUrl = "https://api.openai.com/v1/engines/davinci-codex/completions";
+    [SerializeField] APIData _data = default;
+    private readonly string _apiKey = "";　//コンストラクタでAPIを設定する
+    private readonly string _apiUrl = "";
     string _question = "";
     string _hint = "";
     string _answer = "";
 
+    /// <summary> APIの設定  </summary>
     private ChatGPTClient()
     {
-        DotNetEnv.Env.Load(".env");
-        apiKey = DotNetEnv.Env.GetString("ChatGPT_API ");
+        _apiKey = _data.APIKey;
+        _apiUrl = _data.APIUrl;
     }
     public IEnumerator SendRequest(int level, string genre, System.Action<string, string, string> callback)
     {
         // リクエストの作成
-        UnityWebRequest request = new UnityWebRequest(apiUrl, "POST");
+        UnityWebRequest request = new UnityWebRequest(_apiUrl, "POST");
 
         // リクエストヘッダーの設定
         request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("Authorization", "Bearer " + apiKey);
+        request.SetRequestHeader("Authorization", "Bearer " + _apiKey);
 
         // リクエストボディの設定
         string jsonRequestBody = "{\"prompt\": \"難易度: " + level + "、ジャンル: " + genre + "の2択クイズの問題文を生成してください。" +
