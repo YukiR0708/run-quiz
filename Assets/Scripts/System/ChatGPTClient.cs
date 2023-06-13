@@ -7,12 +7,17 @@ using System.Text.RegularExpressions;
 
 public class ChatGPTClient : MonoBehaviour
 {
-    private const string apiKey = "";　//あとでAPI設定する
+    private readonly string apiKey = "";　//コンストラクタでAPIキーを設定する
     private const string apiUrl = "https://api.openai.com/v1/engines/davinci-codex/completions";
     string _question = "";
     string _hint = "";
     string _answer = "";
 
+    private ChatGPTClient()
+    {
+        DotNetEnv.Env.Load(".env");
+        apiKey = DotNetEnv.Env.GetString("ChatGPT_API ");
+    }
     public IEnumerator SendRequest(int level, string genre, System.Action<string, string, string> callback)
     {
         // リクエストの作成
@@ -24,7 +29,7 @@ public class ChatGPTClient : MonoBehaviour
 
         // リクエストボディの設定
         string jsonRequestBody = "{\"prompt\": \"難易度: " + level + "、ジャンル: " + genre + "の2択クイズの問題文を生成してください。" +
-            "なお、難易度は1~5の5段階で解答はA,Bとします。ヒントも生成してください。" +
+            "なお、難易度は1~5の5段階で選択肢はA,Bとします。ヒントも生成してください。" +
             "出力ではそれぞれ頭に「問題文：」「ヒント：」「解答：」という形でヘッダーをつけてください。\", \"max_tokens\": 50}";
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
