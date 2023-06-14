@@ -17,7 +17,7 @@ public class FieldMove : MonoBehaviour
     private void Update()
     {
         if(_gm.NowMode == GameManager.GameMode.InGame
-            && _pv.NowCondition.HasFlag( PlayerValues.PlayerCondition.Run))
+            && _pv.HasFlag( PlayerValues.PlayerCondition.Run))
         {
             transform.position -= new Vector3(0f, 0f, _speed * Time.deltaTime);
         }

@@ -21,7 +21,7 @@ public class PassedCheck : MonoBehaviour
     {
 
         if (_gm.NowMode == GameManager.GameMode.InGame
-                && _pv.NowCondition.HasFlag(PlayerValues.PlayerCondition.Run))
+                && _pv.HasFlag(PlayerValues.PlayerCondition.Run))
         {
             if (transform.position.z <= _mapGene.BorderPos.z)
             {

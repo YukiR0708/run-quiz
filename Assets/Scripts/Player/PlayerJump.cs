@@ -20,7 +20,7 @@ public class PlayerJump : SingletonMonoBehaviour<PlayerJump>
     void Update()
     {
         if (_gm.NowMode == GameManager.GameMode.InGame
-                && _pv.NowCondition.HasFlag(PlayerValues.PlayerCondition.Run))
+                && _pv.HasFlag(PlayerValues.PlayerCondition.Run))
         {
             if (Input.GetKeyDown(KeyCode.Space) && _canJump)
             {
@@ -33,7 +33,7 @@ public class PlayerJump : SingletonMonoBehaviour<PlayerJump>
     private void OnCollisionEnter(Collision collision)
     {
         if (_gm.NowMode == GameManager.GameMode.InGame
-                && _pv.NowCondition.HasFlag(PlayerValues.PlayerCondition.Run))
+                && _pv.HasFlag(PlayerValues.PlayerCondition.Run))
         {
             if (collision.gameObject.TryGetComponent<FieldMove>(out var field))
             {

@@ -24,7 +24,7 @@ public class MeshChecker : MonoBehaviour
         //Playerの下方向にフィールドがあり、かつPlayerが回答中だったら
         if (Physics.Raycast(ray, out RaycastHit hit, 100.0f))
         {
-            if (_pv.NowCondition.HasFlag(PlayerValues.PlayerCondition.Response)
+            if (_pv.HasFlag(PlayerValues.PlayerCondition.Response)
                 && hit.collider.gameObject.TryGetComponent<FieldMove>(out var field))
             {
                 var fieldRot = field.gameObject.transform.localEulerAngles.x;
@@ -34,11 +34,11 @@ public class MeshChecker : MonoBehaviour
             }
             
         }
-        else if(_pv.NowCondition.HasFlag(PlayerValues.PlayerCondition.Run))
+        else if(_pv.HasFlag(PlayerValues.PlayerCondition.Run))
         {
             //Playerの下方向にフィールドがなく、かつ走行中だったら
-            _pv.NowCondition &= ~PlayerValues.PlayerCondition.Run;
-            _pv.NowCondition |= PlayerValues.PlayerCondition.Fell;
+            _pv.UnsetFlag(PlayerValues.PlayerCondition.Run);
+            _pv.SetFlag(PlayerValues.PlayerCondition.Fell);
             _rb.AddForce(Vector3.down * _downForce);
         }
     }
