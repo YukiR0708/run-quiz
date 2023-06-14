@@ -11,10 +11,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         Pause,
         InPause,
         Result,
-        None,
+        None ,
     }
     [SerializeField]GameMode _nowMode = GameMode.None;
     public GameMode NowMode { get => _nowMode; set =>_nowMode = value; }
+
     protected override bool _dontDestroyOnLoad { get { return true; } }
 
     void Start()

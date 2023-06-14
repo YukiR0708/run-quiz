@@ -7,17 +7,21 @@ public class PassedCheck : MonoBehaviour
 {
     MapGenerator _mapGene = default;
     [Tooltip("PlayerÇÃç¿ïW")] Vector3 _pPos = default;
+    GameManager _gm = default;
+    PlayerValues _pv = default;
     private void Start()
     {
         _mapGene = MapGenerator.Instance;
-        _pPos = PlayerValues.Instance.gameObject.transform.position;
+        _pv = PlayerValues.Instance;
+        _gm = GameManager.Instance;
+        _pPos = _pv.gameObject.transform.position;
     }
 
     private void Update()
     {
 
-        if (GameManager.Instance.NowMode == GameManager.GameMode.InGame
-                && PlayerValues.Instance.NowCondition == PlayerValues.PlayerCondition.Run)
+        if (_gm.NowMode == GameManager.GameMode.InGame
+                && _pv.HasFlag(PlayerValues.PlayerCondition.Run))
         {
             if (transform.position.z <= _mapGene.BorderPos.z)
             {
