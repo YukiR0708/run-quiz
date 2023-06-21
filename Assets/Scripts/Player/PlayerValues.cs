@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using System;
 
+/// <summary> 数値を保持するクラス </summary>
 public class PlayerValues : SingletonMonoBehaviour<PlayerValues>
 {
     protected override bool _dontDestroyOnLoad { get { return true; } }
-    [SerializeField] float _jumpForce = default;
-    public float JumpForce { get => _jumpForce; set => _jumpForce = value; }
-
-
+    [SerializeField, Tooltip("ジャンプ力")] float _jumpForce = default;
+    public float JumpForce => _jumpForce;
+ 
     [System.Flags]
     public enum PlayerCondition
     {
@@ -34,27 +32,25 @@ public class PlayerValues : SingletonMonoBehaviour<PlayerValues>
     public bool HasFlag(PlayerCondition flag) { return _watchPlayerFlag.Value.HasFlag(flag); }
 
 
-
-
-    public enum SelectColor
+    /// <summary> クイズでPlayerの選択を判定するenum </summary>
+    public enum PlayerSelect
     {
         None,
-        Blue,
-        Red,
+        A,    //選択肢：Red
+        B,   //選択肢：Blue
     }
-    [SerializeField] SelectColor _nowColor = SelectColor.None;
-    public SelectColor NowColor { get => _nowColor; set => _nowColor = value; }
+    [SerializeField, Tooltip("現在の選択")] PlayerSelect _pSelect = PlayerSelect.None;
+    public PlayerSelect PSelect { get => _pSelect; set => _pSelect = value; }
 
-    static int _score = 0;
-    public int Score { get => _score; }
+   [Tooltip("現在のスコア")] int _score = 0;
+    public int Score { get => _score; set => _score = value; }
 
-    void Start()
+    public override void ReStart()
     {
-
-    }
-
-    void Update()
-    {
-
+        _score = 0;
+        _pSelect = PlayerSelect.None;
+        _watchPlayerFlag.Dispose();
+        _watchPlayerFlag = new ReactiveProperty<PlayerCondition>();
+        SetFlag(PlayerCondition.Run);
     }
 }

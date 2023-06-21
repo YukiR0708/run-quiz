@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using System;
+using UnityEngine.ProBuilder;
+using static PlayerValues;
 
 public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
 {
@@ -15,13 +17,49 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
     ReactiveProperty<int> _passedCount = new ReactiveProperty<int>();
     public IObservable<int> OnPassdeCountChanged => _passedCount;
 
-    public Vector3 BorderPos { get => _borderPos; }
-    public float Space { get => _space; }
+    public Vector3 BorderPos => _borderPos; 
 
     protected override bool _dontDestroyOnLoad { get { return true; } }
     void Start()
     {
+        ReStart();
+    }
+
+    /// <summary>ボーダーを通過したら自信を消して次のPredabを生成する。Field側からPlayerの通過を検知したら呼ばれるメソッド</summary>
+    /// <param name="field"></param>
+    public void DestroyAndSpawn(GameObject field)
+    {
+        //生成するフィールドを決定する
+        var newField = Fields[UnityEngine.Random.Range(0, Fields.Count)];
+        Instantiate(newField, _spawnPos, field.transform.rotation);
+        Destroy(field);
+        if (!_pv.HasFlag(PlayerValues.PlayerCondition.Response))
+        {
+            _passedCount.Value++;
+        }
+    }
+
+    public void ChangeMaterials(Material m1, Material m2)
+    {
+        GameObject[] fields = GameObject.FindGameObjectsWithTag("Field");
+        foreach(var field in fields)
+        {
+            Material[] tmp = field.GetComponent<Renderer>().materials;
+            tmp[0] = m1;
+            tmp[1] = m2;
+            field.GetComponent<Renderer>().materials = tmp;
+        }
+
+        
+    }
+    public override void ReStart()
+    {
         _pv = PlayerValues.Instance;
+        var fields = GameObject.FindGameObjectsWithTag("Field");
+        if(fields.Length > 0)
+        {
+            foreach(var field in fields)Destroy(field.gameObject);
+        }
         if (0 < _maxCount)
         {
             List<Vector3> GeneratePos = new();
@@ -38,16 +76,8 @@ public class MapGenerator : SingletonMonoBehaviour<MapGenerator>
             }
             _spawnPos = GeneratePos[GeneratePos.Count - 1];
         }
+        _passedCount.Dispose();
+        _passedCount = new ReactiveProperty<int>();
+        _passedCount.Value = 0;
     }
-
-    /// <summary> Field側からPlayerの通過を検知したら呼ばれるメソッド</summary>
-    /// <param name="field"></param>
-    public void DestroyAndSpawn(GameObject field)
-    {
-        var newField = Fields[UnityEngine.Random.Range(0, Fields.Count)];
-        Instantiate(newField, _spawnPos, field.transform.rotation);
-        Destroy(field);
-        if (!_pv.HasFlag(PlayerValues.PlayerCondition.Response)) _passedCount.Value++;
-    }
-
 }

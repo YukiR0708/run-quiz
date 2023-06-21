@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>　入力を受け取ってフィールドを回転させるクラス </summary>
 public class FieldRotate : MonoBehaviour
 {
-    [SerializeField] float _rotateSpeed = 0f;
+    [SerializeField, Tooltip("回転速度")] float _rotateSpeed = 0f;
     GameManager _gm = default;
     PlayerValues _pv = default;
-    public float RotateSpeed { get => _rotateSpeed; set => _rotateSpeed = value; }
+    //public float RotateSpeed { get => _rotateSpeed; set => _rotateSpeed = value; }
 
 
     private void Start()
