@@ -3,18 +3,15 @@ using UnityEngine;
 public class PlayerJump : SingletonMonoBehaviour<PlayerJump>
 {
     Rigidbody _rb = default;
-    [SerializeField]bool _canJump = default;
+    [SerializeField ,Tooltip("ÉWÉÉÉìÉvÇ≈Ç´ÇÈÇ©Ç«Ç§Ç©")]bool _canJump = default;
+    public bool Canjamp => _canJump;
     GameManager _gm = default;
     PlayerValues _pv = default;
     protected override bool _dontDestroyOnLoad { get { return true; } }
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
-        _canJump = true;
-        _gm = GameManager.Instance;
-        _pv = PlayerValues.Instance;
-
+        ReStart();
     }
 
     void Update()
@@ -30,6 +27,8 @@ public class PlayerJump : SingletonMonoBehaviour<PlayerJump>
         }
     }
 
+    /// <summary> ê⁄ínîªíËÇêÿÇËë÷Ç¶ÇÈ </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         if (_gm.NowMode == GameManager.GameMode.InGame
@@ -40,5 +39,13 @@ public class PlayerJump : SingletonMonoBehaviour<PlayerJump>
                 _canJump = true;
             }
         }
+    }
+
+    public override void ReStart()
+    {
+        _rb = GetComponent<Rigidbody>();
+        _canJump = true;
+        _gm = GameManager.Instance;
+        _pv = PlayerValues.Instance;
     }
 }

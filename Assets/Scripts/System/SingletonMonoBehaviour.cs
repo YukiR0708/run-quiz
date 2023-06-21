@@ -35,4 +35,6 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBe
             DontDestroyOnLoad(gameObject);
         }
     }
-}
+
+    public abstract void ReStart();
+    }
